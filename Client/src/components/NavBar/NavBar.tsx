@@ -31,11 +31,15 @@ export default function NavBar() {
   useEffect(() => {
     orderByName(allHotels, orderByNameState);
     orderByNameSearch(searchResults, orderByNameState);
+    setOrderByNameState("");
+    setOrderByCategoryState("");
   }, [orderByNameState]);
 
   useEffect(() => {
     orderByCategory(allHotels, orderByCategoryState);
     orderByCategorySearch(searchResults, orderByCategoryState);
+    setOrderByNameState("");
+    setOrderByCategoryState("");
   }, [orderByCategoryState]);
 
   const handleRoomSearch = () => {
@@ -71,7 +75,7 @@ export default function NavBar() {
         className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
         onClick={handleAllHotels}
       >
-        Mostrar todos los hoteles
+        reset filter
       </button>
 
       <Dropdown size="md">
@@ -109,7 +113,7 @@ export default function NavBar() {
           <h1>Login</h1>
         </div>
       )}
-      <CartComponent />
+      {isLogged.length ? <CartComponent /> : null}
     </nav>
   );
 }

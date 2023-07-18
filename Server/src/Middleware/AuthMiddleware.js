@@ -9,15 +9,9 @@ const authMiddleware = (req, res, next) => {
 
 
   if (authorization) {
-    console.log(authorization);
     try {
       const token = authorization.split(" ")[1].replace(/"/g, '');
-      console.log(token);
-  
-      const decodedToken = jwt.verify(token, JWT_SECRET ); 
-
-      console.log(decodedToken);
-      
+      const decodedToken = jwt.verify(token, JWT_SECRET );      
 
       if (decodedToken && !isTokenExpired(decodedToken)) {
         userData = decodedToken;

@@ -10,7 +10,7 @@ const RoomList = () => {
     roomsHotelSelect: state.roomsHotelSelect,
     currentPage: state.currentPage,
   }));
-  const navigate = useNavigate();
+
   const totalRooms = roomsHotelSelect?.length;
   const firstIndex = (currentPage - 1) * roomsPerPage;
   const lastIndex = currentPage * roomsPerPage;
@@ -22,10 +22,7 @@ const RoomList = () => {
         {totalRooms ? (
           currentRooms.map((room) => {
             return (
-              <div
-                onClick={() => navigate(`/roompage/${room.id}`)}
-                key={room.id}
-              >
+              <Link to={`/roompage/${room.id}`} key={room.id}>
                 <RoomCard
                   id={room.id}
                   name={room.name}
@@ -36,8 +33,9 @@ const RoomList = () => {
                   photo={room.photo}
                   floorNumber={room.floorNumber}
                   disabled={room.disabled}
+                  hotelCategory={room.hotelCategory}
                 />
-              </div>
+              </Link>
             );
           })
         ) : (

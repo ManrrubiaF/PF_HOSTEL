@@ -302,6 +302,8 @@ export default function FormPageH() {
                     </FormControl.Label>
                     <FormControl.Input
                       type="number"
+                      min="1"
+                      max="5"
                       placeholder="category"
                       min="1"
                       max="5"
