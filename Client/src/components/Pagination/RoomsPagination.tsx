@@ -19,7 +19,7 @@ export const RoomsPagination = () => {
 		changeCurrentPage(currentPage + 1);
 	};
 
-	const onSpecificPage = (number) => {
+	const onSpecificPage = (number:any) => {
 		changeCurrentPage(number);
 	};
 

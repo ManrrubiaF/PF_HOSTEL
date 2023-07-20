@@ -28,7 +28,7 @@ export default function DashboardRow({
         setShowConfirmDialog(true);
     };
 
-    const { getHotelByUser } = tokenStore();
+   
 
     const confirmDelete = async () => {
         try {

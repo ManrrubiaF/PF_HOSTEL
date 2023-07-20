@@ -48,8 +48,8 @@ export default function UserSettings() {
     isCheckedValue: "normal",
   });
   const [errors, setErrors] = useState({});
-  const validation = (input) => {
-    let errors = {};
+  const validation = (input:any) => {
+    const errors = {firstName:''};
 
     if (
       !input.firstName ||

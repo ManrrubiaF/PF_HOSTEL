@@ -15,11 +15,6 @@ type Actions = {
   orderByName: (array: Hotel[], event: string) => void;
   orderByCategory: (array: Hotel[], event: string) => void;
   resetHotels: () => void;
-  fetchHotels: () => Promise<void>;
-  setCurrentPage: (pageNum: number) => void;
-  orderByName: (array: Hotel[], event: string) => void;
-  orderByCategory: (array: Hotel[], event: string) => void;
-  resetHotels: () => void;
 };
 
 const initialState: States = {

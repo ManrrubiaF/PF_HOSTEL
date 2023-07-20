@@ -8,7 +8,7 @@ import { ArrowCounterClockwise } from '@phosphor-icons/react';
 import axios from 'axios';
 import { errorToast, successToast } from '../../components/toast';
 import Hotel from "./Hotel.png"
-import { hotelStore, roomsStore, tokenStore } from '../../Store';
+import { hotelStore,  tokenStore } from '../../Store';
 import { useNavigate, useParams } from 'react-router-dom';
 const url = import.meta.env.VITE_URL;
 

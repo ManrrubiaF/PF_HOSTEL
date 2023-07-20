@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import { hotelStore } from '../../Store';
-import { Pagination } from '../Pagination/Pagination';
 import { PaginadoGlobal } from '../Pagination/PaginadoGlobal';
 
 
@@ -18,7 +17,7 @@ const HotelList = () => {
 	const lastIndex = currentPage * hotelsPerPage;
 	const currentHotels = hotels?.slice(firstIndex, lastIndex);
 
-	const handlePaginadoHome = (pageNumbers) => { //tercer componente del paginado
+	const handlePaginadoHome = (pageNumbers:any) => { //tercer componente del paginado
 		setCurrentPage(pageNumbers)
 		PaginadoGlobal(pageNumbers)
 	}

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { hotelStore, searchStore, tokenStore } from "../../Store";
 import UserMenu from "../UserMenuDropDown/UserMenu";
 import AdminMenu from "../UserMenuDropDown/AdminMenu";
-import { Dropdown, Button, Input } from "@rewind-ui/core";
+import { Dropdown, Button } from "@rewind-ui/core";
 import { UserCircle } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import CartComponent from "../CartComponent/CartComponent";
@@ -16,12 +16,11 @@ export default function NavBar() {
   const { reset, orderByCategorySearch, orderByNameSearch } = searchStore();
   const { orderByName, resetHotels, fetchHotels, orderByCategory } =
     hotelStore();
-  const [filterByNameState, setfilterByNameState] = useState();
 
   const [orderByNameState, setOrderByNameState] = useState("");
   const [orderByCategoryState, setOrderByCategoryState] = useState("");
 
-  const handleAllHotels = (element: Event) => {
+  const handleAllHotels = (element:any) => {
     element.preventDefault();
     resetHotels();
     fetchHotels();
@@ -45,6 +44,8 @@ export default function NavBar() {
   const handleRoomSearch = () => {
     navigate("/roomSearch");
   };
+
+
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-gray-900 text-white p-4 space-x-5 flex items-center justify-between w-full">
@@ -98,7 +99,7 @@ export default function NavBar() {
         </Dropdown.Content>
       </Dropdown>
 
-      {isLogged.length ? (
+      {isLogged?.length ? (
         isLogged[2] === "normal" ? (
           <UserMenu />
         ) : (

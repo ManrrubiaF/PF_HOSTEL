@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { tokenStore } from "../../Store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const url = import.meta.env.VITE_URL;
+
+interface Hotel  {
+  id: string;
+  name: string;
+  country: string;
+  city: string;
+  photo: string;
+}
 
 export default function DashboardDetails() {
   const { getHotelByUser } = tokenStore();
@@ -11,7 +18,7 @@ export default function DashboardDetails() {
   const token = tokenStore((state) => state.userState);
   const url = import.meta.env.VITE_URL;
 
-  const [hotelByUser, setHotelByUser] = useState();
+  const [hotelByUser, setHotelByUser] =  useState<Hotel[]>([])
 
   const getHotels = async () => {
     try {

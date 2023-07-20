@@ -5,11 +5,11 @@ import { farewellAdminToast } from "../toast";
 
 export default function ProfileSideBar() {
   const navigate = useNavigate();
-  const { reset } = tokenStore();
-  const handleClick = (event) => {
+  const { resetToken } = tokenStore();
+  const handleClick = (event:any) => {
     event.preventDefault();
     document.cookie = "json=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    reset();
+    resetToken();
     farewellAdminToast("Adiós y buena suerte!");
     navigate("/farewell");
   };

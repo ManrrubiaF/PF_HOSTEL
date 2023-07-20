@@ -25,7 +25,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
   disabled,
   hotelCategory
 }) => {
-  const mainPhoto = Array.isArray(photo) && photo.length > 0 ? photo[0] : null;
+  const mainPhoto = Array.isArray(photo) &&  photo[0] || 'https://image.ondacero.es/clipping/cmsimages02/2021/09/20/B48108F9-45F3-417A-833D-259BC2CFA304/69.jpg?crop=2400,1350,x0,y0&width=1280&height=720&optimize=low' ;
   return (
     <div className="bg-white border-2 w-[300px] h-[450px] relative flex flex-col justify-end rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
       <div className="w-full h-[60%] rounded-t-lg overflow-hidden">

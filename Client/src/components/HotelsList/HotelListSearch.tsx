@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
-import { hotelStore, searchStore } from '../../Store';
-import { Pagination } from '../Pagination/Pagination';
+import { searchStore } from '../../Store';
+
 import { PaginadoGlobal } from '../Pagination/PaginadoGlobal';
 
 
@@ -9,7 +9,7 @@ const HotelListSearch = () => {
     const hotelsPerPage = 3; //primer parametro del paginado
     const currentPageSearch = searchStore((state) => state.currentPageSearch)   //cuarto y ultimo parametro de paginado, la página actual
     
-    const { setCurrentPageSearch } = searchStore()
+    const { setCurrentPageSearch, } = searchStore()
 
     const searchResults = searchStore((state) => state.searchResults)   //para este componente, este es el segundo parametro del paginado
 
@@ -18,9 +18,9 @@ const HotelListSearch = () => {
     const lastIndex = currentPageSearch * hotelsPerPage;
     const currentHotels = searchResults?.slice(firstIndex, lastIndex);
 
-    const handlePaginado = (pageNumber) => {       //tercer parametro del paginado
+    const handlePaginado = (pageNumber:any) => {       //tercer parametro del paginado
         setCurrentPageSearch(pageNumber)
-        paginado(pageNumber);
+       
 
     }
 
@@ -39,7 +39,7 @@ const HotelListSearch = () => {
                                 country={hotel.country}
                                 city={hotel.city}
                                 photo={hotel.photo}
-                                hotelCategory={hotel.hotelcategory}
+                                hotelCategory={hotel.hotelCategory}
                                 services={hotel.services}
                             />
                         </Link>

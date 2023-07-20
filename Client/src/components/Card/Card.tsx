@@ -1,4 +1,3 @@
-import { Button } from '@rewind-ui/core';
 
 interface CardProps {
 	id: string;
@@ -25,7 +24,7 @@ const Card: React.FC<CardProps> = ({
 	return (
 		<div className="bg-white h-[460px] max-w-5xl rounded-md shadow-md flex mx-auto transform hover:scale-105 transition duration-300">
 			<img
-				src={photo}
+				src={photo[0]}
 				alt={name}
 				onError={({ currentTarget }) => {
 					currentTarget.onerror = null;

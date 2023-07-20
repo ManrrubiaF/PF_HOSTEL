@@ -8,7 +8,7 @@ const CheckoutTransitionPage = () => {
 
   useEffect(() => {
     const redirectPay = () => {
-      window.open(urlPayment, "_blank"); // Ruta de la página de pago
+      window.open(urlPayment||'http://localhost:5173/', "_blank"); // Ruta de la página de pago
     };
 
     // Duración del gif en milisegundos

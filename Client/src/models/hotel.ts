@@ -7,7 +7,7 @@ export interface Hotel {
 	country: string;
 	city: string;
 	maxCapacity: string;
-	services:string;
+	services:string[];
 	hotelCategory:string;
-	photo: string;
+	photo: string[];
 }

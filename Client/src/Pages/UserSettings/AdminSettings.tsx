@@ -10,7 +10,7 @@ const url = import.meta.env.VITE_URL;
 export default function AdminSetting() {
   const navigate = useNavigate();
   const userData = tokenStore((state) => state.userState);
-  const { deleteAccount, reset } = userStore();
+  const { reset } = userStore();
   const { resetToken } = tokenStore();
 
   const user = {
@@ -48,7 +48,7 @@ export default function AdminSetting() {
     isCheckedValue: "normal",
   });
   const [errors, setErrors] = useState({});
-  const validation = (input) => {
+  const validation = (input:any) => {
     let errors = {};
 
     if (

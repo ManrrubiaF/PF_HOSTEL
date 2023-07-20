@@ -1,9 +1,7 @@
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import { useState, useEffect } from 'react';
-import { useFetchHotels } from '../../hooks';
 import { Dropdown, Button, Input } from '@rewind-ui/core';
 import { searchStore } from '../../Store';
-import { useStore } from 'zustand'
 
 
 const SearchBar = () => {
@@ -14,7 +12,6 @@ const SearchBar = () => {
 		value: "",
 	})
 	const { fetchSearchResults, setCurrentPageSearch } = searchStore()
-	const searchResultsAux = searchStore((state) => state.searchResults)
 
 	
 	useEffect(() => {
@@ -23,7 +20,7 @@ const SearchBar = () => {
 		}
 	}, [data])
 
-	const handleSearch = async (element) => {
+	const handleSearch = async (element:any) => {
 		element.preventDefault()
 	 
 		if (!selectedOption) {

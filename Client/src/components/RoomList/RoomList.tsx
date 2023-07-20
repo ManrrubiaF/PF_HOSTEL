@@ -1,6 +1,6 @@
 import RoomCard from "../RoomCard/RoomCard";
 import { roomsStore } from "../../Store";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RoomsPagination } from "../Pagination/RoomsPagination";
 
 const roomsPerPage = 3;

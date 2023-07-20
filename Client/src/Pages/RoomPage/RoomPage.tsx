@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { roomsStore } from "../../Store";
 import { useEffect, useState } from "react";
-import { setRoomDetail, useFetchRooms } from "../../hooks";
+import {  useFetchRooms } from "../../hooks";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import NavbarDetail from "../../components/NavBarDetail/NavBarDetail";
@@ -9,7 +9,6 @@ import Footer from "../../components/Footer/Footer";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { tokenStore } from "../../Store";
-import { string } from "yup";
 import { userStore } from "../../Store/UserStore";
 import {
   reserveErrorToast,
@@ -18,13 +17,12 @@ import {
   noDatesToast,
   mustLoginToast, // Agregado: Toast de fechas faltantes
 } from "../../components/toast";
-import { toast } from "react-hot-toast";
 
 export interface ReserveBooking {
   roomId: string;
   checkin: string;
   checkout: string;
-  price: string;
+  price: number;
 }
 
 const RoomPage = () => {
@@ -61,7 +59,7 @@ const RoomPage = () => {
     thumbnail: url,
   }));
 
-  const handleArrivalDateChange = (date) => {
+  const handleArrivalDateChange = (date:any) => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
@@ -72,7 +70,7 @@ const RoomPage = () => {
     setDate((state) => ({ ...state, in: formattedDate }));
   };
 
-  const handleDepartureDateChange = (date) => {
+  const handleDepartureDateChange = (date:any) => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
@@ -83,7 +81,7 @@ const RoomPage = () => {
     setDate((state) => ({ ...state, out: formattedDate }));
   };
 
-  const calculateDays = (item) => {
+  const calculateDays = (item:any) => {
     const checkinDate = new Date(item.checkin);
     const checkoutDate = new Date(item.checkout);
 

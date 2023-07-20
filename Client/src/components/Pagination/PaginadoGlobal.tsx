@@ -1,6 +1,6 @@
 
 
-export const PaginadoGlobal = ({ elementsPerPage, elementToShow, pageSet, currentPage }) => {
+export const PaginadoGlobal = ({ elementsPerPage, elementToShow, pageSet, currentPage }:any) => {
   const totalPages = Math.ceil(elementToShow.length / elementsPerPage);
 
   //Obtener rango de paginas para mostrar en paginado

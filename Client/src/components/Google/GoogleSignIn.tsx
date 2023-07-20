@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 const url = import.meta.env.VITE_URL;
 
 interface GoogleSignInButtonProps {
@@ -12,7 +11,6 @@ const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   endpoint,
 }) => {
   useEffect(() => {
-    const handleCredentialResponse = (response) => {};
 
     const initializeGoogleSignIn = () => {
       google.accounts.id.initialize({

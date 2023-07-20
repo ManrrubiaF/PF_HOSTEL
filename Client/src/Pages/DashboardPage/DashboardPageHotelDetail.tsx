@@ -17,7 +17,7 @@ const DashboardPageHotelDetail = () => {
     <div className="flex flex-col bg-slate-100 rounded-lg p-4 h-full overflow-hidden">
       <h1>Hotel: {hotelonScreen.name}</h1>
       {hotelonScreen?.length ? (
-        hotelonScreen.roomsId.map((room) => {
+        hotelonScreen.roomsId.map((room:any) => {
           return (
             <div>
               <h2>{room.name}</h2>

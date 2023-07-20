@@ -1,25 +1,16 @@
-import axios from 'axios';
 import { create } from 'zustand';
+import {ReactNode} from 'react'
 
-interface User {
-    phoneNumber: any;
-    lastName: any;
-    birthDate: any;
-    name: ReactNode;
-    token: string;
-    userState: string;
-    loggedIn:boolean;
-    userData: {}
-}
+
 
 type States = {
-    userState: User[];
+    userState: any[];
     hotelsUserById: any[];
 }
 
 type Actions = {
-    saveInfo: (arrayAux) => Promise<void>
-    getHotelByUser: (hotelsArray) => Promise<void>
+    saveInfo: (arrayAux:any) => Promise<void>
+    getHotelByUser: (hotelsArray:any) => Promise<void>
     resetToken: () => void
 }
 
