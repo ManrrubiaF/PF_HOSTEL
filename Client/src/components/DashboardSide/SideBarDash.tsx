@@ -7,24 +7,33 @@ import { DashStore } from '../../Store';
 
 export default function ProfileSideBar() {
     const navigate = useNavigate()
-    const { setHotels, setReservs, setComents} = DashStore();
+    const { setHotels, setReservs, setComents, setDelete } = DashStore();
     const { resetToken } = tokenStore()
 
 
-    const setRender = (arg:String) => {
-        if(arg === "coments"){
+    const setRender = (arg: String) => {
+        if (arg === "coments") {
             setComents(true);
             setHotels(false);
-            setReservs(false)
+            setReservs(false);
+            setDelete(false)
         }
-        else if(arg === "reserves"){
+        else if (arg === "reserves") {
             setHotels(false);
             setReservs(true);
             setComents(false);
-        }else {
+            setDelete(false)
+        }
+        else if (arg === "papelera") {
+            setDelete(true)
+            setHotels(false);
+            setReservs(false);
+            setComents(false);
+        } else {
             setHotels(true);
             setReservs(false);
             setComents(false);
+            setDelete(false)
         }
     }
 
@@ -58,7 +67,7 @@ export default function ProfileSideBar() {
                 <nav className="-mx-3 space-y-6">
 
                     <span className="ml-3 my-8 py-3">
-                        <button onClick={() => navigate(-1)} type="button" className="flex items-center text-slate-100 text-m hover:underline">
+                        <button onClick={() => navigate('/')} type="button" className="flex items-center text-slate-100 text-m hover:underline">
                             <span className="inline-flex leading-none rotate-180 transform">
                                 <svg width="24" height="24" className="pointer-events-none max-h-full max-w-full">
                                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2">
@@ -83,6 +92,18 @@ export default function ProfileSideBar() {
                                 onClick={() => setRender("hotels")}
                             >
                                 Hoteles
+                            </span>
+                        </a>
+                        <a className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
+                            <div className="w-5 h-5">
+                                <User size={20} />
+                            </div>
+
+                            <span
+                                className="mx-2 text-sm font-medium"
+                                onClick={() => setRender("papelera")}
+                            >
+                                Papelera
                             </span>
                         </a>
                     </div>
