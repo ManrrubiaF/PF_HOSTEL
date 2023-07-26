@@ -13,20 +13,17 @@ export default function DashboardPapeleraRow({
     country,
     city,
     photo,
-    disabled,
 }: {
     id: string;
     name: string;
     country: string;
     city: string;
     photo: string;
-    disabled: boolean;
 }) {
     const navigate = useNavigate()
     const userData = tokenStore((state) => state.userState);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-    const [showConfirmDisabled, setConfirmDisabled] = useState(false);
-    const [isChecked, setIsChecked] = useState(disabled);
+    const [showConfirmRestore, setConfirmRestore] = useState(false);
     const { setUpdated } = DashStore();
     const currentState = DashStore((state) => state.updated)
 
@@ -34,7 +31,7 @@ export default function DashboardPapeleraRow({
         setShowConfirmDialog(true);
     };
 
-    const confirmPermanentDelete = async (id) => {
+    const confirmPermanentDelete = async (id: any) => {
         try {
             const data = await axios.delete(
                 `${url}/dashboard/hotel/${id}?force=true`,
@@ -49,53 +46,48 @@ export default function DashboardPapeleraRow({
 
             userDeleteToast('Hotel eliminado');
 
-            setUpdated(true);
+            setUpdated(!currentState);
 
             setShowConfirmDialog(false);
         } catch (error) {
             console.log(error);
         }
     };
+    
 
-    const handleEdit = () => {
-        navigate(`/dashboard/hotelupdate/${id}`)
-    };
-    const ConfirmDisabled = async () => {
+    const handleRestore = () => {
+        setConfirmRestore(true)
+    }
+
+    const confirmRestore = async (id: any) => {
         try {
-            const requestBody = { disabled: isChecked };
             const response = await axios.put(
-                `${url}/dashboard/hotel/${id}`,
-                requestBody,
+                `${url}/dashboard/hotel/restore/${id}`,
+                {},
                 {
                     headers: {
                         authorization: `Bearer ${userData[1]}`,
                     },
                 }
-            );
+            )
+            console.log(response);
+            console.log("Hotel Restaurado");
 
-            successToast(response.data);
-            setConfirmDisabled(false);
+            successToast('Hotel Restaurado');
 
+            setShowConfirmDialog(false)
+
+            setUpdated(!currentState)
 
         } catch (error) {
-            errorToast(error.response.data);
-        }
-    }
+            console.log(error);
 
-    const handleChangeCheckbox = (e) => {
-        e.stopPropagation();
-        setIsChecked(e.target.checked);
-        if (e.target.checked !== disabled) {
-            setConfirmDisabled(true);
-        } else {
-            setConfirmDisabled(false)
         }
-    }
-
+    };
 
     return (
         <div className="dashboard-row bg-white rounded-md p-4 mb-4">
-            <div className="grid grid-cols-8 gap-4">
+            <div className="grid grid-cols-7 gap-4">
                 <div className="col-span-2">
                     <img src={photo[0]} alt={name} className="w-48 h-48 object-cover" onClick={() => navigate(`/dashboard/hoteldetail/${id}`)} />
                 </div>
@@ -117,61 +109,60 @@ export default function DashboardPapeleraRow({
                 <div className="col-span-1 flex items-center justify-center">
                     <button onClick={(e) => {
                         e.stopPropagation();
-                        handleEdit();
-                    }}>
-                        <FaEdit />
+                        handleRestore();
+                    }}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow-md transition-all ease-in-out duration-200 focus:outline-none focus:ring focus:ring-blue-300"
+                    >
+                        Restaurar
                     </button>
                 </div>
                 <div className="col-span-1 flex items-center justify-center">
                     <button onClick={(e) => {
                         e.stopPropagation();
                         handleDelete();
-                    }}>
-                        <FaTrashAlt />
+                    }}
+                        className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md shadow-md transition-all ease-in-out duration-200 focus:outline-none focus:ring focus:ring-red-300"
+                    >
+                        Eliminar
                     </button>
-                </div>
-                <div className="col-span-1 flex items-center justify-center">
-                    <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={handleChangeCheckbox}
-                    />
                 </div>
             </div>
 
             {showConfirmDialog && (
-                <div className="bg-slate-600">
+                <div className="bg-slate-600 fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
                     <div className="confirm-dialog-overlay" onClick={() => setShowConfirmDialog(false)} />
-                    <div className="confirm-dialog-content">
-                        <h3 className="confirm-dialog-title">Confirmar eliminación</h3>
-                        <p className="confirm-dialog-message">¿Estás seguro de que deseas eliminar este hotel?</p>
-                        <div className="confirm-dialog-buttons">
-                            <button className="border-slate-950 text-white bg-orange-600 w-[100px]" onClick={(e) => { e.stopPropagation(); confirmPermanentDelete(); }}>
+                    <div className="confirm-dialog-content bg-white rounded-lg p-6 shadow-lg">
+                        <h3 className="confirm-dialog-title text-2xl font-semibold mb-4 text-gray-900">Confirmar Eliminación</h3>
+                        <p className="confirm-dialog-message text-gray-800">¿Estás seguro de que deseas eliminar para siempre este hotel?</p>
+                        <div className="confirm-dialog-buttons mt-6 flex justify-end">
+                            <button className="border-slate-950 text-white bg-lime-500 w-[100px] py-2 px-4 rounded-md mr-4" onClick={(e) => { e.stopPropagation(); confirmPermanentDelete(id); }}>
                                 Sí
                             </button>
-                            <button className="border-slate-950 text-white bg-lime-500 w-[100px]" onClick={(e) => { setShowConfirmDialog(false); e.stopPropagation(); }}>
+                            <button className="border-slate-950 text-white bg-red-500 w-[100px] py-2 px-4 rounded-md" onClick={(e) => { setShowConfirmDialog(false); e.stopPropagation(); }}>
                                 No
                             </button>
                         </div>
                     </div>
                 </div>
             )}
-            {showConfirmDisabled && (
-                <div className="bg-slate-600">
+            {showConfirmRestore && (
+                <div className="bg-slate-600 fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
                     <div className="confirm-dialog-overlay" onClick={() => setShowConfirmDialog(false)} />
-                    <div className="confirm-dialog-content">
-                        <h3 className="confirm-dialog-title">Confirmar activación/desactivación</h3>
-                        <p className="confirm-dialog-message">¿Estás seguro de que deseas activar/desactivar este hotel?</p>
-                        <div className="confirm-dialog-buttons">
-                            <button className="border-slate-950 text-white bg-orange-600 w-[100px]" onClick={(e) => { e.stopPropagation(); ConfirmDisabled(); }}>
+                    <div className="confirm-dialog-content bg-white rounded-lg p-6 shadow-lg">
+                        <h3 className="confirm-dialog-title text-2xl font-semibold mb-4 text-gray-900">Confirmar Restauración</h3>
+                        <p className="confirm-dialog-message text-gray-800">¿Estás seguro de que deseas restaurar este hotel?</p>
+                        <div className="confirm-dialog-buttons mt-6 flex justify-end">
+                            <button className="border-slate-950 text-white bg-lime-500 w-[100px] py-2 px-4 rounded-md mr-4" onClick={(e) => { e.stopPropagation(); confirmRestore(id); }}>
                                 Sí
                             </button>
-                            <button className="border-slate-950 text-white bg-lime-500 w-[100px]" onClick={(e) => { setConfirmDisabled(false); e.stopPropagation(); }}>
+                            <button className="border-slate-950 text-white bg-red-500 w-[100px] py-2 px-4 rounded-md" onClick={(e) => { setConfirmRestore(false); e.stopPropagation(); }}>
                                 No
                             </button>
                         </div>
                     </div>
                 </div>
+
+
             )}
         </div>
     );
