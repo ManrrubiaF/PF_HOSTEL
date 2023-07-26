@@ -25,15 +25,16 @@ const DashBoardPage = () => {
         }
       }, [coments, hotels, reserves, deletedHotels]);
 
-    return (
-        <div className="flex-auto">
-            <div className="flex">
-                <SideBarDash />
-                <div>{renderComponent}</div>
-            </div>
-        </div>
-
-    );
+  return (
+    <div className="flex">
+      <div className="w-[300px]">
+        <SideBarDash />
+      </div>
+      <div className="flex-grow bg-blue-600 p-4">
+        {renderComponent}
+      </div>
+    </div>
+  );
 };
 
 export default DashBoardPage;

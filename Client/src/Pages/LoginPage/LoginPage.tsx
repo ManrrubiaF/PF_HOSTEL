@@ -40,7 +40,7 @@ const LogingPage = () => {
 		async (values: LoginValues, helpers: FormikHelpers<LoginValues>) => {
 			try {
 				console.log('values', values);
-				const arrayAux: [] = [];
+				const arrayAux: any = [];
 				return await axios.post(`${URL}/user/auth`, values).then((response) => {
 					if (response.data) {
 						const tokenRaw = response.data.token
@@ -54,13 +54,13 @@ const LogingPage = () => {
 						saveInfo(arrayAux)
 					}
 					console.log("values", values);
-
+					window.sessionStorage.setItem("tokenUser", JSON.stringify(arrayAux))
 					successToast('Usuario logeado correctamente');
-					navigate('/')
+					navigate(-1)
 				}
 				)
 
-			} catch (error) {
+			} catch (error:any) {
 				errorToast(error.response.data);
 				console.log(error);
 

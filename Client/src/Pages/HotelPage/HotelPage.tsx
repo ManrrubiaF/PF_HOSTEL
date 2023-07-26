@@ -1,26 +1,43 @@
-import { Form, useNavigate, useParams } from 'react-router-dom';
-import { hotelStore, roomsStore, tokenStore } from '../../Store';
+import { useNavigate, useParams } from 'react-router-dom';
+import { SAStore, hotelStore, roomsStore, tokenStore } from '../../Store';
 import RoomList from '../../components/RoomList/RoomList';
 import { useEffect, useState } from 'react';
-import NavBar from '../../components/NavBar/NavBar';
 import { MapPinLine } from '@phosphor-icons/react'
 import Footer from "../../components/Footer/Footer";
 import axios from 'axios';
+import { Hotel } from '../../models';
+import NavbarDetail from '../../components/NavBarDetail/NavBarDetail';
 
 const url = import.meta.env.VITE_URL;
+
+interface Rating {
+	score: number;
+	comment: string;
+	hotelId: string;
+}
 
 const HotelPage = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const [hotelOnScreen, setroomsId] = useState([]);
-	const [hotelRatings, setHotelRatings] = useState([]);
+	const [hotelOnScreen, setroomsId] = useState<Hotel>();
+	const [hotelRatings, setHotelRatings] = useState<Rating[]>([]);
 	const { hotelIdSetter } = roomsStore();
 	const { fetchHotels } = hotelStore();
+	const { saveInfo } = tokenStore()
 	const [hotelsLoaded, setHotelsLoaded] = useState(false);
-	const [showCommentForm, setShowCommentForm] = useState(false);
+	const update = SAStore((state) => state.updated)
 
 	const allHotels = hotelStore((state) => state.hotels);
 	const token = tokenStore((state) => state.userState);
+
+	useEffect(() => {
+		const session: string | null = window.sessionStorage.getItem("tokenUser");
+		if (session) {
+			const parsedSession = JSON.parse(session);
+			console.log(parsedSession);
+			saveInfo(parsedSession);
+		}
+	}, []);
 
 	useEffect(() => {
 		const fetchAllHotels = async () => {
@@ -43,13 +60,15 @@ const HotelPage = () => {
 			try {
 				const response = await axios.get(`${url}/rating/${id}`);
 				setHotelRatings(response.data);
+				console.log(response.data);
+
 			} catch (error) {
 				console.error(error);
 			}
 		};
 
 		fetchRating();
-	}, [id]);
+	}, [id, update]);
 
 
 
@@ -67,13 +86,14 @@ const HotelPage = () => {
 		const newWindowRoute = `/addcomment/${id}`;
 		const windowFeatures = 'height=500,width=800,resizable=yes,scrollbars=yes';
 		window.localStorage.setItem("tokenInfo", JSON.stringify(token))
-		window.localStorage.setItem("hotelId", id)
+		window.localStorage.setItem("hotelId", id || hotelRatings[0].hotelId)
 		window.open(newWindowRoute, '_blank', windowFeatures);
 	};
 
 	return (
 		<div className="bg-slate-600 min-h-screen flex flex-col overflow-hidden">
-			<div className="flex-grow mt-20 overflow-y-auto">
+			<NavbarDetail />
+			<div className="flex-grow mt-10 overflow-y-auto">
 				<div className="max-w-screen-lg mx-auto p-8">
 					<div className="mt-2 flex justify-between">
 						<button onClick={() => navigate('/')} className="bg-blue-500 font-bold w-[80px] border-neutral-950">Back</button>
@@ -106,6 +126,21 @@ const HotelPage = () => {
 					</div>
 				</div>
 
+				{/* Ordered Services */}
+				{hotelOnScreen?.services && hotelOnScreen?.services.length > 0 && (
+					<div className="bg-white max-w-screen-lg mx-auto p-4 rounded-lg shadow-lg w-[960px]">
+						<h3 className="text-[22px] font-bold mb-4">Servicios</h3>
+						<ul className="list-disc list-inside space-y-2">
+							{hotelOnScreen.services.map((service, index) => (
+								<li key={index} className="text-gray-700">{service}</li>
+							))}
+						</ul>
+					</div>
+				)}
+
+
+				{/* Render Rooms */}
+
 				<div className="max-w-screen-lg mx-auto p-8 mt-8 overflow-hidden">
 					{hotelOnScreen ? (
 						<div className="room-list transform transition duration-300 mt-8">
@@ -117,24 +152,12 @@ const HotelPage = () => {
 				</div>
 
 				{/* Agregar comentario button */}
-				
+
 			</div>
 
 			{/* Comentarios section */}
-			<div className="h-96 overflow-y-scroll border border-gray-300 rounded-lg p-4 shadow-lg bg-white max-w-screen-lg mx-auto">
-				<h2 className="text-2xl font-semibold mb-4">Comentarios</h2>
-				<div className="space-y-4">
-					{hotelRatings.length > 0 ? (
-						hotelRatings.map((rating, index) => (
-							<div key={index} className="border-b border-gray-300 pb-2">
-								<p className="text-lg font-semibold text-blue-500">Puntaje: {rating.score}</p>
-								<p className="text-gray-700">{rating.comment}</p>
-							</div>
-						))
-					) : (
-						<p className="text-gray-700">No hay comentarios disponibles.</p>
-					)}
-				</div>
+
+			<div className="max-h-[500px] w-[970px] border border-gray-300 rounded-lg p-4 shadow-lg bg-white  mx-auto mb-2">
 				{token.length > 0 && (
 					<div className="flex justify-center mt-4">
 						<button
@@ -145,11 +168,30 @@ const HotelPage = () => {
 						</button>
 					</div>
 				)}
+
+				<div className="mt-4">
+					<h2 className="text-2xl font-semibold mb-4">Comentarios</h2>
+					<div className="max-h-[300px] overflow-y-scroll">
+						{hotelRatings.length > 0 ? (
+							hotelRatings.map((rating, index) => (
+								<div key={index} className="border-b border-gray-300 pb-2">
+									<div className="flex items-center mb-2">
+										<p className="text-lg font-semibold text-blue-500">Puntaje: {rating.score}</p>
+										<div className="flex ml-2">
+											{/* Agrega aquí cualquier contenido adicional si es necesario */}
+										</div>
+									</div>
+									<p className="text-gray-700 break-words">{rating.comment}</p>
+								</div>
+							))
+						) : (
+							<p className="text-gray-700">No hay comentarios disponibles.</p>
+						)}
+					</div>
+				</div>
+
+
 			</div>
-
-
-
-			<NavBar />
 			<div className="mt-auto">
 				<Footer />
 			</div>

@@ -1,5 +1,5 @@
 import { Button, FormControl } from '@rewind-ui/core';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import { useCallback, useState } from 'react';
 import * as yup from 'yup';
 import BackButton from '../../components/BackButton/BackButton';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import { errorToast, successToast } from '../../components/toast';
 import { tokenStore } from '../../Store';
 import { useNavigate } from 'react-router-dom';
+import { servicesRoom } from '../../utils/servicesArray';
 const url = import.meta.env.VITE_URL;
 
 interface FormValues {
@@ -20,7 +21,6 @@ interface FormValues {
 	photo: string[];
 }
 
-const arrayDePrueba = ['Servicio A', 'Servicio B', 'Servicio C'];
 
 const formValidationSchema = yup.object().shape({
 	roomName: yup.string().trim().required('El nombre de la habitación es requerido'),
@@ -131,9 +131,10 @@ export default function FormPageRoom() {
 
 	return (
 		<div className="flex h-screen">
-			<div className="w-full bg-blue-500 flex flex-col justify-center">
-				<h2 className="text-3xl text-white font-bold px-8 text-center">Título del área azul</h2>
-			</div>
+			<div className="w-full bg-blue-500 flex flex-col justify-center items-center py-8">
+                <h2 className="text-5xl text-white font-bold">Bienvenido a nuestro Hotel</h2>
+                <p className="text-3xl text-white">¡Crea nuevas habitaciones para tus huéspedes!</p>
+            </div>
 			<div className="w-full bg-gray-800 shadow-lg p-8 overflow-y-auto">
 				<div className="max-h-full">
 					<div className="flex justify-start">
@@ -279,7 +280,7 @@ export default function FormPageRoom() {
 
 										>
 											<option value="">Seleccione un servicio</option>
-											{arrayDePrueba.map((option) => (
+											{servicesRoom.map((option) => (
 												<option key={option} value={option}>
 													{option}
 												</option>
