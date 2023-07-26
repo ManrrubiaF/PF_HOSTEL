@@ -6,14 +6,17 @@ import NavbarDetail from "../../components/NavBarDetail/NavBarDetail";
 import RoomCard from "../../components/RoomCard/RoomCard";
 import { filterResetToast } from "../../components/toast";
 import { useFetchRooms } from "../../hooks";
+import PaginadoGlobal from "../../components/Pagination/PaginadoGlobal";
 
 const RoomFilter = () => {
   useFetchRooms()
+  const roomsPerPage = 6;
   const allRooms = roomsStore((state) => state.rooms) ;
   const roomsFiltered = roomsSearchStore((state) => state.roomsFilter)
   const { fetchFilterRooms, sortByPrice, reset } = roomsSearchStore()
+  
+    const currentPage  = roomsStore((state) => state.currentPage)
 
-  console.log(allRooms);
   
   
 
@@ -46,6 +49,8 @@ const RoomFilter = () => {
   const [checkboxValuesCategory, setCheckboxValues] = useState(initialStates.category);
   const [checkboxValuesCapacity, setCheckboxCapacity] = useState(initialStates.capacity);
   const sortByRef = useRef<HTMLSelectElement | null>(null)
+
+
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({ ...filters, minPrice: event.target.value });
@@ -95,17 +100,29 @@ const RoomFilter = () => {
     reset(allRooms)
   }
   
+  
   const filteredRooms = filters.minPrice === "62" && filters.maxPrice === "62" ? [] : roomsFiltered;
+const totalRooms = filteredRooms?.length;
+	const firstIndex = (currentPage - 1) * roomsPerPage;
+	const lastIndex = currentPage * roomsPerPage;
+	const currentRooms = filteredRooms?.slice(firstIndex, lastIndex);
+ const { changeCurrentPage} = roomsStore();  
+
+const handlePaginadoHome = (pageNumbers:any) => {
+    //tercer componente del paginado
+    changeCurrentPage(pageNumbers);
+    
+  };
 
   return (
-    <div className="flex-col bg-slate-600">
-      {/* Navbar */}
-      <NavbarDetail />
+    <div className="flex-col bg-slate-600 ">
+    
+      
 
       {/* Espacio para los filtros y la lista de habitaciones */}
       <div className="flex">
         {/* Filtros */}
-        <div className="dark:bg-gray-900 dark:border-gray-700 w-[500px] p-10 text-white mt-[20px] ml-[20px] rounded h-screen ">
+        <div className="dark:bg-gray-900 dark:border-gray-700 w-[500px] p-10 text-white mt-[150px] ml-[20px] rounded h-screen ">
           <div className="flex">
             <div className="mx-2 text-black">
               <div className="text-blue-500 font-bold">
@@ -381,10 +398,10 @@ const RoomFilter = () => {
         </div>
 
         {/* Lista de habitaciones */}
-        <div className="flex-col ml-[100px] mt-[20px]">
-          {filteredRooms.length ? (
-            <div className="grid grid-cols-3 justify-center mb-4 gap-5">
-              {filteredRooms.map((room) => (
+        <div className="flex-col ml-[100px] mt-[150px]">
+          {totalRooms? (
+            <div className="grid grid-cols-3 justify-center mb-4 gap-5 p-10" >
+              {currentRooms.map((room) => (
                 <Link to={`/roompage/${room.id}`} key={room.id}>
                   <RoomCard
                     id={room.id}
@@ -405,8 +422,16 @@ const RoomFilter = () => {
           ) : (
             <p className="text-white text-center mt-8">No se encontraron habitaciones con los filtros seleccionados.</p>
           )}
+
+          <PaginadoGlobal
+			elementsPerPage={roomsPerPage}
+			elementToShow={roomsFiltered}
+			pageSet={handlePaginadoHome}
+			currentPage={currentPage}
+			/>
         </div>
       </div>
+      <NavbarDetail />
     </div>
   );
 

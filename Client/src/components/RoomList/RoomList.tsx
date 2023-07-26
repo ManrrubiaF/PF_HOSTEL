@@ -1,7 +1,8 @@
 import RoomCard from '../RoomCard/RoomCard';
 import { roomsStore } from '../../Store';
 import { Link } from 'react-router-dom';
-import { RoomsPagination } from '../Pagination/RoomsPagination';
+import PaginadoGlobal from '../Pagination/PaginadoGlobal';
+
 
 const roomsPerPage = 3;
 
@@ -15,10 +16,17 @@ const RoomList = () => {
 	const firstIndex = (currentPage - 1) * roomsPerPage;
 	const lastIndex = currentPage * roomsPerPage;
 	const currentRooms = roomsHotelSelect?.slice(firstIndex, lastIndex);
+const { changeCurrentPage} = roomsStore();
+
+const handlePaginadoHome = (pageNumbers:any) => {
+    //tercer componente del paginado
+    changeCurrentPage(pageNumbers);
+    
+  };
 
 
 	return (
-		<div>
+		<div className=" justify-center">
 			<div className="grid grid-cols-3 justify-center mb-4 gap-5">
 				{totalRooms ? (
 					currentRooms.map((room) => {
@@ -43,7 +51,12 @@ const RoomList = () => {
 					<p>No se encontró nada</p>
 				)}
 			</div>
-			<RoomsPagination />
+			<PaginadoGlobal
+			elementsPerPage={roomsPerPage}
+			elementToShow={roomsHotelSelect}
+			pageSet={handlePaginadoHome}
+			currentPage={currentPage}
+			/>
 		</div>
 	);
 

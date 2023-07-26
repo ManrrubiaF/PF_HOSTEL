@@ -30,6 +30,8 @@ export default function AdminSetting() {
         phoneNumber: `${userData[0].phoneNumber}`,
         email: `${userData[0].email}`
     };
+    console.log(user);
+    
     const handleDelete = async () => {
         try {
             const data = await axios.delete(
@@ -53,15 +55,18 @@ export default function AdminSetting() {
     }
 
     const [input, setInput] = useState({
-        firstName: "",
-        lastName: "",
-        birthDate: "",
-        phoneNumber: "",
+        firstName: user.name,
+        lastName: user.lastName,
+        birthDate: user.dateOfBirth,
+        phoneNumber: user.phoneNumber,
         isChecked: false,
         password: "",
         isCheckedValue: "normal",
 
     });
+
+    console.log(input);
+    
     const [errors, setErrors] = useState<errores>({password:'', lastName:'',firstName:'', phoneNumber:''})
     const validation = (inputObject:any) => {
         let errors:errores = {password:'', lastName:'',firstName:'', phoneNumber:''};

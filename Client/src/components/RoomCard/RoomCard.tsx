@@ -25,7 +25,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
   const mainPhoto =
     Array.isArray(photo) && photo.length > 0 ? photo[0] : undefined;
   return (
-    <div className="bg-white border-2 w-[300px] h-[450px] relative flex flex-col justify-end rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+    <div className="bg-white border-2 w-[300px] mx-10 h-[450px] relative flex flex-col justify-end rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
       <div className="w-full h-[60%] rounded-t-lg overflow-hidden">
         <div className="image-gallery inline-block">
           <img

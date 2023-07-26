@@ -1,9 +1,10 @@
 import React from 'react';
 import { Hotel } from '../../models';
+import { Room } from '../../Store';
 
 interface PaginadoGlobalProps {
   elementsPerPage: number;
-  elementToShow: Hotel[];
+  elementToShow: Hotel[]|Room[];
   pageSet: (pageNumber: number) => void;
   currentPage: number;
 }

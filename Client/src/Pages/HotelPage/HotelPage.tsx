@@ -50,7 +50,7 @@ const HotelPage = () => {
 			try {
 				const response = await axios.get(`${url}/rating/${id}`);
 				setHotelRatings(response.data);
-				console.log(response.data);
+				
 				
 			} catch (error) {
 				console.error(error);
@@ -81,8 +81,7 @@ const HotelPage = () => {
 	};
 
 	return (
-		<div className="bg-slate-600 min-h-screen flex flex-col overflow-hidden">
-			<NavbarDetail />
+		<div className="bg-slate-600 min-h-screen flex flex-col overflow-hidden mt-[50px]">
 			<div className="flex-grow mt-10 overflow-y-auto">
 				<div className="max-w-screen-lg mx-auto p-8">
 					<div className="mt-2 flex justify-between">
@@ -123,7 +122,7 @@ const HotelPage = () => {
 						<ul className="list-disc list-inside space-y-2">
 							{hotelOnScreen.services.map((service, index) => (
 								<li key={index} className="text-gray-700">{service}</li>
-							))}
+								))}
 						</ul>
 					</div>
 				)}
@@ -131,14 +130,14 @@ const HotelPage = () => {
 
 				{/* Render Rooms */}
 
-				<div className="max-w-screen-lg mx-auto p-8 mt-8 overflow-hidden">
+				<div className="max-w-screen-lg mx-auto p-8 mt-8 overflow-hidden justify-center ">
 					{hotelOnScreen ? (
-						<div className="room-list transform transition duration-300 mt-8">
+						<div className="room-list transform transition duration-300 mt-8 justify justify-center">
 							<RoomList />
 						</div>
 					) : (
 						<p className="text-white">No hay habitaciones disponibles.</p>
-					)}
+						)}
 				</div>
 
 				{/* Agregar comentario button */}
@@ -174,9 +173,9 @@ const HotelPage = () => {
 									<p className="text-gray-700 break-words">{rating.comment}</p>
 								</div>
 							))
-						) : (
-							<p className="text-gray-700">No hay comentarios disponibles.</p>
-						)}
+							) : (
+								<p className="text-gray-700">No hay comentarios disponibles.</p>
+								)}
 					</div>
 				</div>
 
@@ -185,10 +184,11 @@ const HotelPage = () => {
 			<div className="mt-auto">
 				<Footer />
 			</div>
+<NavbarDetail />
 		</div>
 	);
-
-
+	
+	
 };
 
 export default HotelPage;
