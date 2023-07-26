@@ -13,21 +13,17 @@ export default function ProfileSideBar() {
 
     const setRender = (arg: String) => {
         if (arg === "coments") {
-    const setRender = (arg: String) => {
-        if (arg === "coments") {
             setComents(true);
             setHotels(false);
             setReservs(false);
             setDelete(false)
         }
         else if (arg === "reserves") {
-        else if (arg === "reserves") {
             setHotels(false);
             setReservs(true);
             setComents(false);
             setDelete(false)
-        }
-        else if (arg === "papelera") {
+        } else if (arg === "papelera") {
             setDelete(true)
             setHotels(false);
             setReservs(false);
@@ -39,6 +35,7 @@ export default function ProfileSideBar() {
             setDelete(false)
         }
     }
+
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
@@ -85,38 +82,26 @@ export default function ProfileSideBar() {
                         <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">
                             Panel de Administración
                         </label>
-                        <a   onClick={() => setRender("hotels")} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
+                        <a onClick={() => setRender("hotels")} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
                             <div className="w-5 h-5">
                                 <User size={20} />
                             </div>
 
                             <span
                                 className="mx-2 text-sm font-medium"
-                              
+
                             >
                                 Hoteles
                             </span>
                         </a>
-                        <a className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
+                        <a onClick={() => setRender("papelera")} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
                             <div className="w-5 h-5">
                                 <User size={20} />
                             </div>
 
                             <span
                                 className="mx-2 text-sm font-medium"
-                                onClick={() => setRender("papelera")}
-                            >
-                                Papelera
-                            </span>
-                        </a>
-                        <a className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
-                            <div className="w-5 h-5">
-                                <User size={20} />
-                            </div>
 
-                            <span
-                                className="mx-2 text-sm font-medium"
-                                onClick={() => setRender("papelera")}
                             >
                                 Papelera
                             </span>
@@ -171,4 +156,4 @@ export default function ProfileSideBar() {
             </div>
         </aside>
     )
-} 
+}
