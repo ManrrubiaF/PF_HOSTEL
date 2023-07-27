@@ -3,17 +3,16 @@ import { DashStore, tokenStore } from '../../Store';
 import axios from 'axios';
 import DashboardPapeleraRow from './DashboardPapeleraRow';
 import NavBarDashboardPapelera from './NavBarDashboardPapelera';
+const url = import.meta.env.VITE_URL;
 
 const DashboardPapelera = () => {
     const { getHotelByUser } = tokenStore()
     const token = tokenStore((state) => state.userState)
-    const url = import.meta.env.VITE_URL;
-    const userData = tokenStore((state) => state.userState);
+
     const update = DashStore((state) => state.updated)
 
 
     const [hotelsForDeleted, setHotelsForDeleted] = useState<any[]>([])
-    console.log(userData);
     
     const getHotelsBin = async () => {
         try {

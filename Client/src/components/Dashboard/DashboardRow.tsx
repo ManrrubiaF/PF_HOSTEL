@@ -47,7 +47,6 @@ export default function DashboardRow({
 
             userDeleteToast('Hotel eliminado');
 
-
             setShowConfirmDialog(false);
 
             setUpdated(!currentState)

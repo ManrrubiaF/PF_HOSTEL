@@ -7,7 +7,7 @@ import { DashStore } from '../../Store';
 
 export default function ProfileSideBar() {
     const navigate = useNavigate()
-    const { setHotels, setReservs, setComents, setDelete } = DashStore();
+    const { setHotels, setReservs, setComents, setDelete, setDeleteRooms } = DashStore();
     const { resetToken } = tokenStore()
 
 
@@ -16,23 +16,33 @@ export default function ProfileSideBar() {
             setComents(true);
             setHotels(false);
             setReservs(false);
-            setDelete(false)
+            setDelete(false);
+            setDeleteRooms(false);
         }
         else if (arg === "reserves") {
             setHotels(false);
             setReservs(true);
             setComents(false);
-            setDelete(false)
+            setDelete(false);
+            setDeleteRooms(false);
         } else if (arg === "papelera") {
-            setDelete(true)
             setHotels(false);
             setReservs(false);
             setComents(false);
+            setDelete(true);
+            setDeleteRooms(false);
+        } else if (arg === "rooms") {
+            setHotels(false);
+            setReservs(false);
+            setComents(false);
+            setDelete(false);
+            setDeleteRooms(true);
         } else {
             setHotels(true);
             setReservs(false);
             setComents(false);
-            setDelete(false)
+            setDelete(false);
+            setDeleteRooms(false);
         }
     }
 
@@ -101,9 +111,20 @@ export default function ProfileSideBar() {
 
                             <span
                                 className="mx-2 text-sm font-medium"
-
                             >
                                 Papelera
+                            </span>
+                        </a>
+
+                        <a onClick={() => setRender("rooms")} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer">
+                            <div className="w-5 h-5">
+                                
+                            </div>
+
+                            <span
+                                className="mx-2 text-sm font-medium"
+                            >
+                                PapeleraRooms
                             </span>
                         </a>
                     </div>

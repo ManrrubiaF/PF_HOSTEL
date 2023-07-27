@@ -5,25 +5,30 @@ import ReservesDashboard from "../../components/Dashboard/DashboardReserves";
 import ComentsDashboard from "../../components/Dashboard/DashboardComents";
 import { useEffect, useState } from "react";
 import DashboardPapelera from "../../components/Dashboard/DashboardPapelera";
+import DashboardPapeleraRooms from "../../components/Dashboard/DashboardPapeleraRooms";
 
-const DashBoardPage = () => { 
-    const { coments, hotels, reserves, deletedHotels } = DashStore((state)=> state)
-    const [renderComponent, setRenderComponent] = useState<React.ReactNode>(null);
+const DashBoardPage = () => {
+  const { coments, hotels, reserves, deletedHotels, deletedRooms } = DashStore((state) => state)
+  const [renderComponent, setRenderComponent] = useState<React.ReactNode>(null);
 
-    useEffect(() => {
-        if (coments === true) {
-          setRenderComponent(< ComentsDashboard/>);
-        } else if (hotels === true) {
-          setRenderComponent(<DashboardHotel />);
-        } else if (reserves === true) {
-          setRenderComponent(<ReservesDashboard />);
-        }
-        else if(deletedHotels === true) {
-          setRenderComponent(<DashboardPapelera />)
-        } else {
-          setRenderComponent(<div>No se seleccionó ninguna opción.</div>);
-        }
-      }, [coments, hotels, reserves, deletedHotels]);
+  useEffect(() => {
+    if (coments === true) {
+      setRenderComponent(< ComentsDashboard />);
+    } else if (hotels === true) {
+      setRenderComponent(<DashboardHotel />);
+    } else if (reserves === true) {
+      setRenderComponent(<ReservesDashboard />);
+    }
+    else if (deletedHotels === true) {
+      setRenderComponent(<DashboardPapelera />)
+    }
+    else if (deletedRooms === true) {
+      setRenderComponent(<DashboardPapeleraRooms />)
+    }
+    else {
+      setRenderComponent(<div>No se seleccionó ninguna opción.</div>);
+    }
+  }, [coments, hotels, reserves, deletedHotels, deletedRooms]);
 
   return (
     <div className="flex">

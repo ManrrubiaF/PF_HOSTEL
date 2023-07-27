@@ -72,11 +72,13 @@ const UpdateRoomsByHotel = async (req, res) => {
 
 const deleteRoomsByHotel = async (req, res) => {
   const { roomId } = req.params;
+  const {force = false } = req.query;
   try {
     const room = await Room.findOne({
       where: {
         id: roomId,
       },
+      paranoid: !force
     });
     if (!room) {
       return res.status(404).send("Habitación no encontrada");
@@ -89,7 +91,7 @@ const deleteRoomsByHotel = async (req, res) => {
     });
     if (hotel) {
       await room.update({ disabled: true });
-      await room.destroy();
+      await room.destroy({force: force});
 
       return res.status(200).send("Sala eliminada con éxito");
     } else {
@@ -99,6 +101,7 @@ const deleteRoomsByHotel = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+
 const restoreRoom = async (req, res) => {
   const { roomId } = req.params;
   try {
@@ -106,7 +109,7 @@ const restoreRoom = async (req, res) => {
     if (!room) {
       return res.status(404).send("Habitación no encontrada");
     }
-    if (!room.deletedAt) {
+    if (!room.destroyTime) {
       return res.status(400).send("La habitación ya está restaurada");
     }
     let turoom;
@@ -235,19 +238,20 @@ const createRoomByHotel = async (req, res) => {
 
 const deleteHotelByUser = async (req, res) => {
   const { id } = req.params;
-
+  const { force= false } = req.query
   try {
     const hotel = await Hotel.findOne({
       where: {
         id: id,
         userId: userData.id,
       },
+      paranoid: !force
     });
     if (!hotel) {
       return res.status(404).send("Hotel no encontrado");
     }
-    await hotel.update({ disabled: true });
-    await hotel.destroy();
+    await hotel.update({ disabled: true })
+    await hotel.destroy({force: force});
     return res.status(200).send("Hotel eliminado con éxito");
   } catch (error) {
     return res.status(500).send(error.message);
@@ -261,7 +265,7 @@ const restoreHotel = async (req, res) => {
     if (!hotel) {
       return res.status(404).send("Hotel no encontrado");
     }
-    if (!hotel.deletedAt) {
+    if (!hotel.destroyTime) {
       return res.status(400).send("El hotel ya está restaurado");
     }
     if (hotel.userId !== userData.id) {

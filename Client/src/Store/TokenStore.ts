@@ -9,11 +9,11 @@ export interface User {
     name: string;
     token: string;
     userState: string;
-    loggedIn:boolean;
-    userData: {[key: string]: any}
+    loggedIn: boolean;
+    userData: { [key: string]: any }
 }
 
-type Token = string; 
+type Token = string;
 
 type IsAdmin = 'admin' | 'normal' | 'super'
 
@@ -22,7 +22,7 @@ export interface UserState extends Array<any> {
     1: Token,
     2: IsAdmin,
     3: boolean
-} 
+}
 
 
 type States = {
@@ -32,7 +32,7 @@ type States = {
 }
 
 type Actions = {
-    saveInfo: (arrayAux:any) => Promise<void>
+    saveInfo: (arrayAux: any) => Promise<void>
     getHotelByUser: (hotelsArray: any[]) => Promise<void>
     resetToken: () => void
 }
@@ -43,23 +43,23 @@ const initialState: States = {
     price: 0
 }
 
- export const tokenStore = create<States & Actions>((set) => ({
+export const tokenStore = create<States & Actions>((set) => ({
     ...initialState,
 
-    saveInfo: async(arrayAux:any) => {
+    saveInfo: async (arrayAux: any) => {
         set(() => ({
             userState: arrayAux
         }))
     },
 
-    getHotelByUser: async(hotelsArray:any) => {
+    getHotelByUser: async (hotelsArray: any) => {
         set(() => ({
             hotelsUserById: hotelsArray
         }))
     },
 
     resetToken: () => {
-		set(initialState);
-	},
-    
+        set(initialState);
+    },
+
 }))

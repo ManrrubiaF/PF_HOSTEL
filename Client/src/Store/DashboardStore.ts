@@ -2,7 +2,8 @@ import { create } from 'zustand';
 
 type States = {
     hotels: boolean;
-    deletedHotels: boolean
+    deletedHotels: boolean;
+    deletedRooms: boolean;
     reserves: boolean;
     coments: boolean;
     updated: boolean;
@@ -14,11 +15,13 @@ type Actions = {
     setComents: (boolean: boolean) => void;
     setUpdated: (boolean: boolean) => void;
     setDelete: (boolean: boolean) => void;
+    setDeleteRooms: (boolean: boolean) => void;
 };
 
 const initialState: States = {
     hotels: true,
     deletedHotels: false,
+    deletedRooms:false,
     reserves: false,
     coments: false,
     updated: false,
@@ -36,6 +39,12 @@ export const DashStore = create<States & Actions>((set) => ({
         set((state) => ({
             ...state,
             deletedHotels: boolean,
+        }))
+    },
+    setDeleteRooms: (boolean) => {
+        set((state) => ({
+            ...state,
+            deletedRooms: boolean
         }))
     },
     setReservs: (boolean) => {

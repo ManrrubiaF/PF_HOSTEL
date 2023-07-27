@@ -41,8 +41,7 @@ export default function DashboardRowRoom({
                     },
                 }
             );
-            console.log(data);
-            console.log("Hotel eliminado");
+
 
             userDeleteToast('Room eliminated');
 
@@ -84,11 +83,11 @@ export default function DashboardRowRoom({
 
                 <div className="col-span-1 flex items-center justify-center">
                     <button
-                  
-                     onClick={(e) => {
-                        e.stopPropagation();
-                        handleEdit();
-                    }}>
+
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleEdit();
+                        }}>
                         <FaEdit size={32} />
                     </button>
                 </div>
