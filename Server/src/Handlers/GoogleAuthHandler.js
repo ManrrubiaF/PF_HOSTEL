@@ -62,7 +62,12 @@ const authGoogle = async (req, res) => {
             
             const allInfo = {admin: admin, token: token, data: userData}
     
-            res.cookie('json', allInfo);
+            res.cookie('json', allInfo, {
+              httpOnly: true, 
+              secure: true,   
+              sameSite: 'strict', 
+              expires: expirationDate, 
+          });
         }
       
         return res.status(200).redirect(`${FRONT_URL}`);
