@@ -26,13 +26,10 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
-            // Place third-party dependencies in a separate chunk
             return "vendor";
           } else if (id.includes("src")) {
-            // Place your local code in a separate chunk
             return "app";
           }
-          // Let Vite handle other cases
         },
       },
     },

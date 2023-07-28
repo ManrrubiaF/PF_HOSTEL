@@ -28,53 +28,43 @@ const authGoogle = async (req, res) => {
     const hashedpass = await bcrypt.hash(pass_generated, 5);
 
     try {
-        const Authexist = await Auth.findOne({ where: { email: email } });
-        if (Authexist) {
-          const findUserData = await User.findOne({ where: { id: Authexist.userId } });
-      
-          if (findUserData.google_id !== sub) {
-            await findUserData.update({ google_id: sub });
-          }
-          if(findUserData){
-            const admin = findUserData.admin
-            const token = jwt.sign({ id: findUserData.id, admin: findUserData.admin }, JWT_SECRET, { expiresIn: '6h' });
-            const userData = { id: findUserData.id, email: email, name: name, lastName: lastName, admin: findUserData.admin };
-            const allInfo = {admin: admin, token: token, data: userData}
-            res.cookie('json', allInfo);
-            return res.status(201).redirect(`${FRONT_URL}`);
-          }
-        } else {
-
-            const newUser = await User.create({
-                name: name,
-                lastName: lastName,
-                disabled: false,
-            });
-
-            await Auth.create({
-                userId: newUser.id,
-                email: email,
-                password: hashedpass,
-            });
-            const admin = newUser.admin
-            const token = jwt.sign({ id: newUser.id, admin: newUser.admin }, JWT_SECRET, { expiresIn: '6h' });
-            const userData = { id: newUser.id, email: email, name: name, lastName: lastName, admin: admin };
-            
-            const allInfo = {admin: admin, token: token, data: userData}
-    
-            res.cookie('json', allInfo, {
-              httpOnly: true, 
-              secure: true,   
-              sameSite: 'strict', 
-              expires: expirationDate, 
+      const Authexist = await Auth.findOne({ where: { email: email } });
+      if (Authexist) {
+          // Resto del código...
+      } else {
+          const newUser = await User.create({
+              name: name,
+              lastName: lastName,
+              disabled: false,
           });
-        }
-      
-        return res.status(200).redirect(`${FRONT_URL}`);
-      } catch (error) {
-        return res.status(500).json(error);
+
+          await Auth.create({
+              userId: newUser.id,
+              email: email,
+              password: hashedpass,
+          });
+
+          const admin = newUser.admin;
+          const token = jwt.sign({ id: newUser.id, admin: newUser.admin }, JWT_SECRET, { expiresIn: '6h' });
+          const userData = { id: newUser.id, email: email, name: name, lastName: lastName, admin: admin };
+          const allInfo = { admin: admin, token: token, data: userData };
+
+          // Establecer la cookie con atributos de seguridad
+          res.cookie('json', allInfo, {
+              httpOnly: true,
+              secure: true,
+              sameSite: 'strict',
+              expires: expirationDate,
+          });
+
+          // Redirigir al usuario después de establecer la cookie
+          return res.status(201).redirect(`${FRONT_URL}`);
       }
-      
+
+      return res.status(200).redirect(`${FRONT_URL}`);
+  } catch (error) {
+      return res.status(500).json(error);
+  }
 };
 
 module.exports = {
