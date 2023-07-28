@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { server } = require ("../server");
+const express = require("express");
 const { AuthHandler } = require("../Handlers/AuthHandler");
 const {
   createUserForEmail,
@@ -18,7 +18,7 @@ const { confirmedAccount } = require("../Handlers/ConfirmEmailHandler");
 const { googleVerify } = require("../Middleware/GoogleMiddleware");
 const { authGoogle } = require("../Handlers/GoogleAuthHandler");
 const userRouter = Router();
-const middleurlencode = server.urlencoded({ extended: true });
+const middleurlencode = express.urlencoded({ extended: true });
 
 userRouter.post("/google_singin",middleurlencode, googleVerify, authGoogle);
 userRouter.get("/confirmEmail/:token", confirmedAccount);
