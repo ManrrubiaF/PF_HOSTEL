@@ -106,7 +106,7 @@ export default function AdminSetting() {
             {
                 name: input.firstName || user.name,
                 lastName: input.lastName || user.lastName,
-                birthDate: input.birthDate || user.dateOfBirth,
+                
                 phoneNumber: input.phoneNumber || user.phoneNumber,
                 admin: input.isCheckedValue,
             },
