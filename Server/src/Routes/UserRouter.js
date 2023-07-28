@@ -17,8 +17,9 @@ const { confirmedAccount } = require("../Handlers/ConfirmEmailHandler");
 const { googleVerify } = require("../Middleware/GoogleMiddleware");
 const { authGoogle } = require("../Handlers/GoogleAuthHandler");
 const userRouter = Router();
+const middleurlencode = express.urlencoded({ extended: true });
 
-userRouter.post("/google_singin", googleVerify, authGoogle);
+userRouter.post("/google_singin",middleurlencode, googleVerify, authGoogle);
 userRouter.get("/confirmEmail/:token", confirmedAccount);
 userRouter.post("/signup", createUserForEmail);
 userRouter.post("/auth", AuthHandler);
