@@ -20,6 +20,8 @@ export default function HomePage() {
 
 
 	useEffect(() => {
+    fetchHotels();
+    findCookie();
 		const sessionSA: string | null = window.sessionStorage.getItem("SALoginInfo");
 		const session: string | null = window.sessionStorage.getItem("tokenUser");
 
@@ -60,10 +62,6 @@ export default function HomePage() {
     // console.log('Valor de la cookie "access":', accessToken);
   };
 
-  useEffect(() => {
-    fetchHotels();
-    findCookie();
-  }, []);
 
   useEffect(() => {
     getFavorite(token[1]);
