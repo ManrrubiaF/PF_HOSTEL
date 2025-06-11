@@ -7,7 +7,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import axios from "axios";
 import { errorToast, successToast } from "../../components/toast";
-import Hotel from "./Hotel.png";
+import Hotel from "./hotel.png";
 import { hotelStore, tokenStore } from "../../Store";
 import { useNavigate, useParams } from "react-router-dom";
 import { servicesHotel } from "../../utils/servicesArray";
