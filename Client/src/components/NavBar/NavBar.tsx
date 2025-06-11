@@ -47,7 +47,7 @@ export default function NavBar() {
 	};
 
 	return (
-		<nav className="fixed top-0 left-0 right-0 bg-gray-900 text-white p-4 space-x-5 flex items-center justify-between w-full">
+		<nav className="fixed top-0 left-0 right-0 bg-gray-900 width-100vw text-white p-4 space-x-5 flex items-center justify-between w-full">
 			<div className="flex items-center">
 				<img
 					className="h-[70px] w-[80px] mr-2"
@@ -56,8 +56,8 @@ export default function NavBar() {
 				/>
 				<div>
 					<h1 className="text-white">
-						<span className="text-5xl font-bold tracking-wider">HOTEL</span>
-						<span className="text-blue-500 text-5xl font-extrabold tracking-wider">
+						<span className="text-4xl font-bold tracking-wider">HOTEL</span>
+						<span className="text-blue-500 text-4xl font-extrabold tracking-wider">
 							HUNT
 						</span>
 					</h1>
@@ -66,21 +66,19 @@ export default function NavBar() {
 			<SearchBar />
 			<button
 				onClick={handleRoomSearch}
-				className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+				className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
 			>
 				Habitaciones
 			</button>
 
 			{isLogged.length > 0 && (
-				<button className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600" onClick={() => navigate('/myfavorites')}>favorites</button>
+				<button className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600" onClick={() => navigate('/myfavorites')}>Favoritos</button>
 			)}
 
 			<button
-				className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+				className="px-3 py-2 rounded-md w-fit-content bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
 				onClick={handleAllHotels}
-			>
-				restablecer filtro
-			</button>
+			> Borrar filtro</button>
 
 			<Dropdown size='md'>
 				<Dropdown.Trigger>

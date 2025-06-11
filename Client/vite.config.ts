@@ -12,7 +12,7 @@ export default defineConfig({
             "Cross-Origin-Opener-Policy",
             "same-origin-allow-popups"
           );
-          res.setHeader("Access-Control-Allow-Origin", "https://hotelhunt.kerchakpetshop.com.ar/");
+          res.setHeader("Access-Control-Allow-Origin", "*");
           res.setHeader("Access-Control-Allow-Credentials", "true");
           next();
         });

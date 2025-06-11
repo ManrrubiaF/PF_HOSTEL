@@ -52,7 +52,7 @@ const SearchBar = () => {
 	// }
 
 	return (
-		<div className="bg-slate-500 p-2 rounded-md flex items-center w-[500px]">
+		<div className="bg-slate-500 p-2 rounded-md flex align-items-center w-[500px]">
 			<Input
 				value={input}
 				onChange={(event) => setinput(event.target.value)}
@@ -62,8 +62,8 @@ const SearchBar = () => {
 			/>
 			<Dropdown>
 				<Dropdown.Trigger>
-					<Button className="w-32 justify-center">
-						{selectedOption ? traduccion[selectedOption] : 'Buscar por'}
+					<Button className="w-fit-content justify-center align-center">
+						{selectedOption ? traduccion[selectedOption] : ''}
 					</Button>
 				</Dropdown.Trigger>
 				<Dropdown.Content>
@@ -77,7 +77,7 @@ const SearchBar = () => {
 			</Dropdown>
 
 			<button className="p-2" onClick={(element) => handleSearch(element)}>
-				<MagnifyingGlass size={28} weight="bold" />
+				<MagnifyingGlass size={16} weight="bold" />
 			</button>
 		</div>
 
